@@ -10,7 +10,7 @@ interface IHookRegion {
   isLoading: boolean;
   error: IError | null;
   retrieveAll: () => Promise<void>;
-  retrieveOneByName: (name: string) => Promise<void>;
+  retrieveOneByName: (name: string) => Promise<IRegionResponse | undefined>;
 }
 
 export const useRegion = (): IHookRegion => {
@@ -42,6 +42,7 @@ export const useRegion = (): IHookRegion => {
           throw regionResponse;
         }
         saveRegion(regionResponse);
+        return regionResponse;
       } catch (err: any) {
         setError(err);
       } finally {

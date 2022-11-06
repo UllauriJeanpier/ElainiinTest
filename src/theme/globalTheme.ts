@@ -1,6 +1,11 @@
 const COLORS = {
   primary: '#F97373',
   secondary: '#809AF5',
+  verde: '#0CDB54',
+  morado: '#AC6EF3',
+  button: {
+    primary: '#F75183',
+  },
   text: {
     normal: 'white',
     gris: '#CFD5E9',
