@@ -35,8 +35,8 @@ const indexStyles = StyleSheet.create({
     borderRadius: 50,
   },
   textBtnFooter: {
-    fontFamily: FONTS[500],
-    fontSize: 15,
+    fontFamily: FONTS[900],
+    fontSize: 16,
     color: COLORS.text.normal,
   },
 });
@@ -46,14 +46,27 @@ const itemStyles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     marginVertical: 10,
-    paddingVertical: 10,
+    paddingVertical: 15,
     marginHorizontal: 10,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   text: {
     fontFamily: FONTS[500],
     fontSize: 15,
     color: COLORS.text.normal,
+  },
+  btnContainer: {
+    backgroundColor: COLORS.blanco,
+    borderRadius: 15,
+    paddingVertical: 3,
+    marginTop: 10,
+    alignItems: 'center',
+    width: '75%',
+  },
+  btnText: {
+    fontFamily: FONTS[500],
+    fontSize: 12,
+    color: COLORS.text.negro,
   },
 });
 

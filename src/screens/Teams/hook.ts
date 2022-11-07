@@ -1,24 +1,30 @@
 import { useNavigation } from '@react-navigation/native';
-import { usePokedex } from '../../hooks/main/pokedex';
 import { useTeam } from '../../hooks/main/team';
 import { ITeam } from '../../interfaces/team';
 
 export const useTeams = () => {
   const navigation = useNavigation();
-  const { teams } = useTeam();
-  const { savePokemonsSelected } = usePokedex();
+  const { teams, team, updateSelectedTeam, updateTeams } = useTeam();
 
-  const onPressTeam = (team: ITeam) => {
-    savePokemonsSelected(team.pokemons);
+  const onPressTeam = (selectedTeam: ITeam) => {
+    updateSelectedTeam(selectedTeam);
+    navigation.navigate('Pokemons');
   };
 
   const onPressAddTeam = () => {
+    updateSelectedTeam(null);
     navigation.navigate('Pokemons');
+  };
+
+  const onPressRemove = (selectedTeam: ITeam) => {
+    updateTeams(teams.filter(item => item.token !== selectedTeam.token));
   };
 
   return {
     teams,
+    team,
     onPressTeam,
     onPressAddTeam,
+    onPressRemove,
   };
 };

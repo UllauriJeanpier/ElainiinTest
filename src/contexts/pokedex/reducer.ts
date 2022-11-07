@@ -3,7 +3,6 @@ import { IPokemonResponse } from '../../interfaces/pokemon';
 
 export interface IPokedexState {
   pokemons: IPokemonItemList[];
-  pokemonsSelected: IPokemonItemList[];
   pokemonDetail: IPokemonResponse | null;
 }
 
@@ -12,12 +11,6 @@ type PokedexAction =
       type: 'savePokedex';
       payload: {
         pokemons: IPokemonItemList[];
-      };
-    }
-  | {
-      type: 'savePokemonsSelected';
-      payload: {
-        pokemonsSelected: IPokemonItemList[];
       };
     }
   | {
@@ -37,11 +30,7 @@ export const PokedexReducer = (
         ...state,
         pokemons: action.payload.pokemons,
       };
-    case 'savePokemonsSelected':
-      return {
-        ...state,
-        pokemonsSelected: action.payload.pokemonsSelected,
-      };
+
     case 'savePokemonDetail':
       return {
         ...state,

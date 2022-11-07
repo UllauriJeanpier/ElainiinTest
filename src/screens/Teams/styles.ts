@@ -7,7 +7,11 @@ const indexStyles = StyleSheet.create({
     paddingHorizontal: '6%',
     backgroundColor: COLORS.secondary,
   },
+  headerContainer: {
+    flexDirection: 'row',
+  },
   footerContainer: {
+    marginVertical: 15,
     alignItems: 'center',
   },
   footerBtn: {
@@ -37,6 +41,20 @@ const itemStyles = StyleSheet.create({
   text: {
     fontFamily: FONTS[500],
     fontSize: 15,
+    color: COLORS.text.normal,
+  },
+  btnRemove: {
+    position: 'absolute',
+    right: -5,
+    top: -5,
+    paddingVertical: 5,
+    paddingHorizontal: 7,
+    borderRadius: 20,
+    backgroundColor: COLORS.morado,
+  },
+  btnRemoveText: {
+    fontFamily: FONTS[400],
+    fontSize: 12,
     color: COLORS.text.normal,
   },
 });

@@ -3,12 +3,14 @@ const COLORS = {
   secondary: '#809AF5',
   verde: '#0CDB54',
   morado: '#AC6EF3',
+  blanco: '#F5F8F6',
   button: {
     primary: '#F75183',
   },
   text: {
     normal: 'white',
     gris: '#CFD5E9',
+    negro: '#191A19',
   },
 };
 

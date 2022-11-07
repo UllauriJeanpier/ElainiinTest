@@ -1,19 +1,24 @@
 import { Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { itemStyles as styles } from '../styles';
-import { useTeams } from '../hook';
 import { ITeam } from '../../../interfaces/team';
 
 interface Props {
   item: ITeam;
+  index: number;
+  onPress: (selectedTeam: ITeam) => void;
+  onPressRemove: (selectedTeam: ITeam) => void;
 }
 
-export const ItemList = ({ item }: Props) => {
-  const { onPressTeam } = useTeams();
-
+export const ItemList = ({ item, index, onPress, onPressRemove }: Props) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={onPressTeam}>
-      <Text style={styles.text}>{item.token}</Text>
+    <TouchableOpacity style={styles.container} onPress={() => onPress(item)}>
+      <TouchableOpacity
+        style={styles.btnRemove}
+        onPress={() => onPressRemove(item)}>
+        <Text style={styles.btnRemoveText}>X</Text>
+      </TouchableOpacity>
+      <Text style={styles.text}>Equipo {index + 1}</Text>
     </TouchableOpacity>
   );
 };

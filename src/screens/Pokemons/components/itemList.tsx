@@ -7,9 +7,15 @@ interface Props {
   item: IPokemonItemList;
   isSelected: (item: IPokemonItemList) => boolean;
   onPress: (item: IPokemonItemList) => void;
+  onPressDetail: (item: IPokemonItemList) => void;
 }
 
-export const ItemList = ({ item, isSelected, onPress }: Props) => {
+export const ItemList = ({
+  item,
+  isSelected,
+  onPress,
+  onPressDetail,
+}: Props) => {
   return (
     <TouchableOpacity
       style={[
@@ -20,6 +26,11 @@ export const ItemList = ({ item, isSelected, onPress }: Props) => {
       ]}
       onPress={() => onPress(item)}>
       <Text style={styles.text}>{item.pokemon_species.name}</Text>
+      <TouchableOpacity
+        style={styles.btnContainer}
+        onPress={() => onPressDetail(item)}>
+        <Text style={styles.btnText}>Ver Detalle</Text>
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 };

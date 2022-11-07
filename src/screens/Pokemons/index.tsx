@@ -1,24 +1,25 @@
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { indexStyles as styles } from './styles';
-import React from 'react';
-import { GlogalStyles } from '../../theme/globalStyles';
 import { usePokemons } from './hook';
 import { ItemList } from './components/itemList';
+import { Header } from '../../components/header';
 
 export const Pokemons = () => {
   const {
     currentPokemons,
+    team,
     nextPage,
     prevPage,
     isTeamCompleted,
     isSelected,
     onPressPokemon,
     onPressSave,
+    onPressDetail,
   } = usePokemons();
 
   return (
     <View style={styles.container}>
-      <Text style={GlogalStyles.title}>Pokemons</Text>
+      <Header title="Pokemons" canGoBack />
       <FlatList
         data={currentPokemons}
         numColumns={2}
@@ -27,6 +28,7 @@ export const Pokemons = () => {
             item={item}
             isSelected={isSelected}
             onPress={onPressPokemon}
+            onPressDetail={onPressDetail}
           />
         )}
         keyExtractor={item => item.pokemon_species.name}
@@ -37,7 +39,10 @@ export const Pokemons = () => {
               style={styles.btnHeader}
               onPress={onPressSave}
               disabled={!isTeamCompleted}>
-              <Text style={styles.textBtnHeader}> Guardar </Text>
+              <Text style={styles.textBtnHeader}>
+                {' '}
+                {team ? 'Actualizar Equipo' : 'Agregar Equipo'}{' '}
+              </Text>
             </TouchableOpacity>
           </View>
         }

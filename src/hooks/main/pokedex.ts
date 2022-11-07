@@ -7,24 +7,16 @@ import { IPokemonResponse } from '../../interfaces/pokemon';
 
 interface IHookPokedex {
   pokemons: IPokemonItemList[];
-  pokemonsSelected: IPokemonItemList[];
   pokemonDetail: IPokemonResponse | null;
   isLoading: boolean;
   error: IError | null;
   retrieveByRegion: (region: string) => Promise<void>;
   retrieveDetailByName: (name: string) => Promise<void>;
-  savePokemonsSelected: (pokemonsSelected: IPokemonItemList[]) => Promise<void>;
 }
 
 export const usePokedex = (): IHookPokedex => {
-  const {
-    pokemonDetail,
-    pokemons,
-    pokemonsSelected,
-    savePokemonsSelected,
-    savePokemonDetail,
-    savePokemons,
-  } = usePokedexContext();
+  const { pokemonDetail, pokemons, savePokemonDetail, savePokemons } =
+    usePokedexContext();
 
   const [error, setError] = useState<IError | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -70,12 +62,10 @@ export const usePokedex = (): IHookPokedex => {
 
   return {
     pokemons,
-    pokemonsSelected,
     pokemonDetail,
     isLoading,
     error,
     retrieveByRegion,
     retrieveDetailByName,
-    savePokemonsSelected,
   };
 };

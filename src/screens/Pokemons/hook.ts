@@ -10,17 +10,17 @@ import { uid } from '../../utils/function';
 export const usePokemons = () => {
   const navigation = useNavigation();
   const { region } = useRegion();
-  const { pokemons, pokemonsSelected, savePokemonsSelected } = usePokedex();
-  console.log(
-    '🚀 ~ file: hook.ts ~ line 14 ~ usePokemons ~ pokemonsSelected',
-    pokemons.length
-  );
-  const { teams, updateTeams } = useTeam();
+  const { pokemons, retrieveDetailByName } = usePokedex();
+  const { teams, updateTeams, team, updateSelectedTeam } = useTeam();
   const { user } = useUserContext();
+
+  const [pokemonsSelected, setPokemonsSelected] = useState<IPokemonItemList[]>(
+    team ? team.pokemons : []
+  );
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const recordsPerPage = 16;
+  const recordsPerPage = 12;
   const nPages = Math.ceil(pokemons.length / recordsPerPage);
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
@@ -51,9 +51,9 @@ export const usePokemons = () => {
   const onPressPokemon = (item: IPokemonItemList) => {
     const selected = isSelected(item);
     if (!selected && pokemonsSelected.length < 6) {
-      return savePokemonsSelected([...pokemonsSelected, item]);
+      return setPokemonsSelected([...pokemonsSelected, item]);
     } else {
-      return savePokemonsSelected(
+      return setPokemonsSelected(
         pokemonsSelected.filter(
           pokemon => pokemon.pokemon_species.name !== item.pokemon_species.name
         )
@@ -63,17 +63,33 @@ export const usePokemons = () => {
 
   const onPressSave = () => {
     const uidVal = uid();
-    updateTeams([
-      ...teams,
-      {
-        user_id: user!.id,
-        region: region!.name,
-        pokemons: pokemonsSelected,
-        token: uidVal,
-      },
-    ]);
-
+    if (team) {
+      const updatedTeams = teams.map(item => {
+        if (item.token === team.token) {
+          return { ...item, pokemons: pokemonsSelected };
+        }
+        return item;
+      });
+      updateTeams(updatedTeams);
+    } else {
+      updateTeams([
+        ...teams,
+        {
+          user_id: user!.id,
+          region: region!.name,
+          pokemons: pokemonsSelected,
+          token: uidVal,
+        },
+      ]);
+    }
+    updateSelectedTeam(null);
+    setPokemonsSelected([]);
     navigation.goBack();
+  };
+
+  const onPressDetail = (item: IPokemonItemList) => {
+    navigation.navigate('PokemonDetail');
+    retrieveDetailByName(item.pokemon_species.name);
   };
 
   const currentPokemons = useMemo(
@@ -82,14 +98,14 @@ export const usePokemons = () => {
   );
 
   return {
-    pokemons,
     currentPokemons,
-    pokemonsSelected,
     isTeamCompleted,
+    team,
     nextPage,
     prevPage,
     isSelected,
     onPressPokemon,
     onPressSave,
+    onPressDetail,
   };
 };

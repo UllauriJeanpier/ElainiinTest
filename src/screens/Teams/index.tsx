@@ -1,20 +1,26 @@
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
-import { GlogalStyles } from '../../theme/globalStyles';
+import { Header } from '../../components/header';
 import { ItemList } from './components/itemList';
 import { useTeams } from './hook';
 import { indexStyles as styles } from './styles';
 
 export const Teams = () => {
-  const { teams, onPressAddTeam } = useTeams();
+  const { teams, onPressAddTeam, onPressTeam, onPressRemove } = useTeams();
 
   return (
     <View style={styles.container}>
-      <Text style={GlogalStyles.title}>Equipos</Text>
-
+      <Header title={'Equipos'} canGoBack />
       <FlatList
         data={teams}
         numColumns={2}
-        renderItem={({ item }) => <ItemList item={item} />}
+        renderItem={({ item, index }) => (
+          <ItemList
+            item={item}
+            index={index}
+            onPress={onPressTeam}
+            onPressRemove={onPressRemove}
+          />
+        )}
         keyExtractor={item => item.token}
         showsVerticalScrollIndicator={false}
         ListFooterComponent={

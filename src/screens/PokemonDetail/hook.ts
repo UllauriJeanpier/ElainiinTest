@@ -1,3 +1,9 @@
+import { usePokedex } from '../../hooks/main/pokedex';
+
 export const usePokemonDetail = () => {
-  return {};
+  const { pokemonDetail } = usePokedex();
+
+  return {
+    pokemonDetail,
+  };
 };
