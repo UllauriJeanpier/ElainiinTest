@@ -5,6 +5,7 @@ import { usePokedex } from '../../hooks/main/pokedex';
 import { useRegion } from '../../hooks/main/region';
 import { useTeam } from '../../hooks/main/team';
 import { IPokemonItemList } from '../../interfaces/pokedex';
+import { databaseService } from '../../services/database';
 import { uid } from '../../utils/function';
 
 export const usePokemons = () => {
@@ -48,6 +49,11 @@ export const usePokemons = () => {
     [pokemonsSelected]
   );
 
+  const cleanUp = () => {
+    updateSelectedTeam(null);
+    setPokemonsSelected([]);
+  };
+
   const onPressPokemon = (item: IPokemonItemList) => {
     const selected = isSelected(item);
     if (!selected && pokemonsSelected.length < 6) {
@@ -66,24 +72,28 @@ export const usePokemons = () => {
     if (team) {
       const updatedTeams = teams.map(item => {
         if (item.token === team.token) {
-          return { ...item, pokemons: pokemonsSelected };
+          const updatedTeam = { ...item, pokemons: pokemonsSelected };
+          // save it for copy by token
+          databaseService.teamByToken.save(item.token, updatedTeam);
+          // -------------------------
+          return updatedTeam;
         }
         return item;
       });
       updateTeams(updatedTeams);
     } else {
-      updateTeams([
-        ...teams,
-        {
-          user_id: user!.id,
-          region: region!.name,
-          pokemons: pokemonsSelected,
-          token: uidVal,
-        },
-      ]);
+      const teamAdded = {
+        user_id: user!.id,
+        region: region!.name,
+        pokemons: pokemonsSelected,
+        token: uidVal,
+      };
+      // save it for copy by token
+      databaseService.teamByToken.save(uidVal, teamAdded);
+      // -------------------------
+      updateTeams([...teams, teamAdded]);
     }
-    updateSelectedTeam(null);
-    setPokemonsSelected([]);
+    cleanUp();
     navigation.goBack();
   };
 
@@ -101,6 +111,7 @@ export const usePokemons = () => {
     currentPokemons,
     isTeamCompleted,
     team,
+    cleanUp,
     nextPage,
     prevPage,
     isSelected,

@@ -17,6 +17,7 @@ const indexStyles = StyleSheet.create({
   footerBtn: {
     paddingVertical: 10,
     borderRadius: 10,
+    marginBottom: 10,
     width: '70%',
     alignItems: 'center',
     backgroundColor: COLORS.button.primary,
@@ -41,6 +42,7 @@ const itemStyles = StyleSheet.create({
   text: {
     fontFamily: FONTS[500],
     fontSize: 15,
+    marginBottom: 10,
     color: COLORS.text.normal,
   },
   btnRemove: {
@@ -56,6 +58,19 @@ const itemStyles = StyleSheet.create({
     fontFamily: FONTS[400],
     fontSize: 12,
     color: COLORS.text.normal,
+  },
+  tokenContainer: {
+    backgroundColor: COLORS.blanco,
+    borderRadius: 15,
+    paddingVertical: 5,
+    alignItems: 'center',
+    width: '80%',
+  },
+  textToken: {
+    fontFamily: FONTS[500],
+    fontSize: 12,
+    marginVertical: 1,
+    color: COLORS.text.negro,
   },
 });
 

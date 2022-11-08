@@ -8,12 +8,13 @@ export const Login = () => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>INICIAR SESION</Text>
       <TouchableOpacity style={styles.faceButton} onPress={signInWithFacebook}>
-        <Text style={styles.text}>Log in Facebook</Text>
+        <Text style={styles.text}>Ingresar con Facebook</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.googleButton} onPress={signInWithGoogle}>
-        <Text style={styles.text}>Log in Google</Text>
+        <Text style={styles.text}>Ingresar con Google</Text>
       </TouchableOpacity>
     </View>
   );
